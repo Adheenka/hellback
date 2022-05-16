@@ -1,0 +1,300 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+    {% if category %}
+        {{ category.description|truncatewords:160 }}
+    {% else %}
+        Welcome to HELBAK Store ...
+    {% endif %}
+{% endblock %}
+
+    {% block title %}
+    {% if category %}
+        {{ category.name }} - HELBAK Store
+    {% else %}
+        See our new collections -HELBAK Store
+    {% endif %}
+    {% endblock %}
+
+{% block content %}
+{% if category %}
+
+    <div>
+        <div class="row my_row_class">
+            <div class="mx_auto">
+            <p><a href="{% url 'ecommerce_app:allProdCat' %}"> Our Product Collection</a>{{category.name}}</p>
+            </div>
+        </div>
+    </div>
+
+
+<div>
+{% endif %}
+    <div class="mx_auto">
+    {% if category %}
+        <img class="my_image" width="1500" height="450" src="{{category.image.url}}" alt="{{category.name}}">
+    </div>
+</div>
+<br>
+    <div>
+    <h1 class="text-centre my_title">{{category.name}}</h1>
+    <p class="text-justify">{{category.description}}</p>
+    </div>
+{% else %}
+<div>
+    <img class="my_image my_image_padding" src="{% static 'img/banner 8.jpg' %}" alt="our products", width="1500px";, height="450px";>
+</div>
+<br>
+<div>
+    <h1 class="text-centre my_title" style="font-size:20px; color: black; text-align: center; ">See More Collections</h1>
+    <p class="text-justify" style="  letter-spacing : .2em; color: white; background-color: #8ebf42; text-align: center;">Sign Up For 10% Off Your Firest Order</p>
+</div>
+{% endif %}
+<div class="container">
+    <div class="row mx_auto">
+        {% for product in products.object_list %}
+        <div class="my_bottom_margin col-9 col-sm-12 col-md-4 col-lg-4">
+            <div class="card-text-center" style="min-width:18rem; height:590px;">
+                <a href="{{product.get_url}}"><img class="card-img-top my_image" style=" height:490px; text-align: center;" src="{{product.imge.url}}" alt="{{product.name}}"></a>
+                    <div class="card-body">
+                        <h4 style=" font-weight: 30px;  font-size:20px; color: red; text-align: center; ">{{product.name}}</h4>
+                        <p style="  font-size:20px; color: black; text-align: center; "> ₹{{product.price}}</p>
+                    </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="mx_auto">
+        {% if products.paginator.num_pages > 1 %}
+        <hr>
+        <div class="text-center">
+            {% for pg in products.paginator.page_range %}
+            <a href="?page={{pg}}" class="btn btn-light btn-sm {% if products.number == pg %} active {% endif %}">{{pg}}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <br>
+</div>
+
+<footer class="footer"   style="background-color: #D3D3D3	rgb(211,211,211);">
+  <div class="footer__addr">
+    <h1 class="footer__logo">HELBACK</h1>
+
+    <h2>Contact</h2>
+
+    <address>
+      HELBACK TECHOLOGY .pvt@ palarivattom,kochi<br>
+
+      <a class="footer__btn" href="mailto:example@gmail.com">Email Us</a>
+        helback@gmail.com
+    </address>
+  </div>
+
+  <ul class="footer__nav">
+    <li class="nav__item">
+      <h2 class="nav__title">HELP</h2>
+
+      <ul class="nav__ul">
+        <li>
+          <a href="#">Shippig</a>
+        </li>
+
+        <li>
+          <a href="#">Returen policy</a>
+        </li>
+
+        <li>
+          <a href="#">FAQ</a>
+        </li>
+      </ul>
+    </li>
+
+
+    <li class="nav__item nav__item--extra">
+      <h2 class="nav__title">Shop</h2>
+
+      <ul class="nav__ul nav__ul--extra">
+        <li>
+          <a href="#">mensware</a>
+        </li>
+
+        <li>
+          <a href="#">whatch</a>
+        </li>
+
+        <li>
+          <a href="#">jackets</a>
+        </li>
+
+        <li>
+          <a href="#">pants</a>
+        </li>
+
+      </ul>
+    </li>
+
+    <li class="nav__item">
+      <h2 class="nav__title">Legal</h2>
+
+      <ul class="nav__ul">
+        <li>
+          <a href="#">Privacy Policy</a>
+        </li>
+
+        <li>
+          <a href="#">Terms of Use</a>
+        </li>
+
+        <li>
+          <a href="#">Sitemap</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <div class="legal">
+    <p>&copy; 2019 Something. All rights reserved.</p>
+
+
+  </div>
+</footer>
+<style>
+  *, *:before, *:after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+}
+
+
+
+.footer {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 30px 30px 20px 30px;
+  color:#202020
+  background-color: #fff;
+  border-top: 1px solid #e5e5e5;
+}
+
+.footer > * {
+  flex:  1 100%;
+}
+
+.footer__addr {
+  margin-right: 1.25em;
+  margin-bottom: 2em;
+}
+
+.footer__logo {
+  font-family: 'Pacifico', cursive;
+  font-weight: 400;
+  text-transform: lowercase;
+  font-size: 1.5rem;
+}
+
+.footer__addr h2 {
+  margin-top: 1.3em;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.nav__title {
+  font-weight: 400;
+  font-size: 15px;
+}
+
+.footer address {
+  font-style: normal;
+  color: #999;
+}
+
+.footer__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  max-width: max-content;
+  background-color: #696969;
+  border-radius: 100px;
+  color: #CFECEC;
+  line-height: 0;
+  margin: 0.6em 0;
+  font-size: 1rem;
+  padding: 0 1.3em;
+}
+
+.footer ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.footer li {
+  line-height: 2em;
+}
+
+.footer a {
+  text-decoration: none;
+}
+
+.footer__nav {
+  display: flex;
+	flex-flow: row wrap;
+}
+
+.footer__nav > * {
+  flex: 1 50%;
+  margin-right: 1.25em;
+}
+
+.nav__ul a {
+  color: #999;
+}
+
+.nav__ul--extra {
+  column-count: 2;
+  column-gap: 1.25em;
+}
+
+.legal {
+  display: flex;
+  flex-wrap: wrap;
+  color: #999;
+}
+
+.legal__links {
+  display: flex;
+  align-items: center;
+}
+
+.heart {
+  color: #2f2f2f;
+}
+
+@media screen and (min-width: 24.375em) {
+  .legal .legal__links {
+    margin-left: auto;
+  }
+}
+
+@media screen and (min-width: 40.375em) {
+  .footer__nav > * {
+    flex: 1;
+  }
+
+  .nav__item--extra {
+    flex-grow: 2;
+  }
+
+  .footer__addr {
+    flex: 1 0px;
+  }
+
+  .footer__nav {
+    flex: 2 0px;
+  }
+}
+</style>
+{% endblock %}
